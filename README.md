@@ -9,12 +9,12 @@ First time pull
 
 PULL before you PUSH
 
-Pull shit on the repository
+Pull on the repository
 (Get in your src code)
 
 ```git pull branchName```
 
-When you do your work do this shit
+When you do your work do this first
 ```
 catkin_make
 source devel/setup.bash
@@ -23,7 +23,7 @@ git branch (lists all branches)
 git checkout branch name (to get in the right branch) (only do this when you need to switch branches)
 ```
 
-Push shit on the repository
+Push onto the repository
 ```
 git add -A
 git commit -m "Message"
