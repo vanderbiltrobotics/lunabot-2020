@@ -1,9 +1,6 @@
 # lunabot_2020_master
 Baibhav Vatsa™ Edition®
 
-# TeleopExample
-## How to build these packages
-
 1. This is a catkin project, therefore you will need to create a catkin workspace to contain all the packages. Create a folder called `catkin_ws` and within it, a folder called `src`. Navigate to the catkin_ws directory. This can be done via the command line with the following commands: 
 ```
 mkdir -p catkin_ws/src  # Create catkin_ws and catkin_ws/src directories
