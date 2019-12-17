@@ -38,7 +38,7 @@
     </collision>
     <xacro:default_inertial mass="50"/> 
   </link>
-  
+  <!--
     <joint name="base_link__link_01" type="revolute">
         <axis xyz="0 0 1" />
         <limit effort="1000.0" lower="-3.14" upper="3.14" velocity="0.5" />
@@ -55,6 +55,7 @@
             </geometry>
         </visual>
     </link>
+    -->
 
   <xacro:macro name="wheel" params="prefix suffix ref ref2">
     <link name="${prefix}_${suffix}_wheel">

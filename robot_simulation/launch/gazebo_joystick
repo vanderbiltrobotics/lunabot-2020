@@ -15,10 +15,9 @@
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" />
   
   <!-- The following should be replaced by whatever the motor control team comes up with -->
- 
-  <include file="$(find ros_teleop)/ros_teleop.launch">
+   <remap from="drive_cmd" to="gazebo_sample_drive_controller/cmd_vel"/>
+   <node pkg="ros_teleop" type="teleop_control.py" name="teleop_control"/>
 
-  </include>
 
   <rosparam command="load"
             file="$(find robot_simulation)/config/joints.yaml"
