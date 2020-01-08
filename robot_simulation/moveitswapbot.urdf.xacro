@@ -16,14 +16,9 @@
   </xacro:macro> 
 
   <!-- MoveIt requires a fixed base for the arm -->
-  <link name="dummy_base"/>
+  <link name="dummy_base">
+  </link>
 
-  <joint name="dummy_joint" type="fixed">
-     <parent link="dummy_base"/>
-     <child link="base_link"/>
-  </joint>
-  
-  
   <link name="base_link">
     <visual>
       <geometry>
@@ -47,7 +42,10 @@
     </collision>
     <xacro:default_inertial mass="50"/> 
   </link>
-
+    <joint name="dummy_joint" type="fixed">
+     <parent link="dummy_base"/>
+     <child link="base_link"/>
+  </joint>
   
   <xacro:macro name="m_joint" params="name type axis_xyz origin_rpy origin_xyz parent child limit_e limit_l limit_u limit_v">
     <joint name="${name}" type="${type}">
@@ -97,7 +95,7 @@
   <m_joint name="base_to_arm_1" type="revolute"
            axis_xyz="0 1 0"
            origin_rpy="0 0.5 0" origin_xyz="-0.4 0 0.15"
-           parent="base_link" child="arm_1"
+           parent="dummy_base" child="arm_1"
            limit_e="1000" limit_l="-3.14" limit_u="3.14" limit_v="0.5" />
            
   <m_link_cylinder name="arm_1"
