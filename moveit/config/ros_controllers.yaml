@@ -22,12 +22,20 @@ hardware_interface:
 joint_state_controller:
   type: joint_state_controller/JointStateController
   publish_rate: 50
+  
+
 controller_list:
   - name: arm_controller
     action_ns: follow_joint_trajectory
-    default: True
     type: FollowJointTrajectory
+    default: true
     joints:
       - base_to_arm_1
       - arm_1_to_arm_2
       - arm_2_to_arm_3
+arm_controller:
+  type: "position_controllers/JointTrajectoryController"
+  joints:
+    - base_to_arm_1
+    - arm_1_to_arm_2
+    - arm_2_to_arm_3
