@@ -8,4 +8,4 @@ moveit_setup_assistant_config:
   CONFIG:
     author_name: Jeongwoo Seo
     author_email: jeongwoo.seo@vanderbilt.edu
-    generated_timestamp: 1578535000
+    generated_timestamp: 1578587427

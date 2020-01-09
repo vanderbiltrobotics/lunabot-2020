@@ -42,14 +42,5 @@ wheel_controller:
       has_acceleration_limits: false
       max_acceleration       : 6.0   # rad/s^2
 
-arm_controller:
-  action_ns: follow_joint_trajectory
-  default: True
-  type: FollowJointTrajectory
-  joints:
-    - base_to_arm_1
-    - arm_1_to_arm_2
-    - arm_2_to_arm_3
-
 
     
