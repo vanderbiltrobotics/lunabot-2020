@@ -1,0 +1,87 @@
+import cv2
+import time
+import yaml
+import numpy as np
+
+print cv2.__version__
+
+DEVICE_NUM = 2
+SAVE_PATH = "./calib_images/"
+SAVE_PATH_YAML = "./calib_data/cam.yaml"
+CAPTURE_RATE = 1
+PREVIEW_TIME = 10
+
+dictionary = cv2.aruco.Dictionary_get(cv2.aruco.DICT_6X6_250)
+
+cal_data = yaml.load(open('./boards/board.yaml', 'r'), Loader=yaml.Loader)
+board = cv2.aruco.CharucoBoard_create(
+    cal_data['num_cols'],
+    cal_data['num_rows'],
+    cal_data['chess_size'],
+    cal_data['marker_size'],
+    dictionary
+)
+parameters =  cv2.aruco.DetectorParameters_create()
+
+stream = cv2.VideoCapture(DEVICE_NUM)
+
+allCorners = []
+allIds = []
+decimator = 0
+frame_count = 0
+start_time = time.time()
+
+while True:
+
+    ret, gray = stream.read()
+
+    if time.time() - start_time > CAPTURE_RATE:
+
+        res = cv2.aruco.detectMarkers(gray, board.dictionary, parameters=parameters)
+        # TODO not using refineDetectedMarkers
+        cv2.aruco.refineDetectedMarkers(gray, board, res[0], res[1], res[2])
+
+        print res[0], res[1]
+        if len(res[0])>0:
+            for r in res[0]:
+                cv2.cornerSubPix(
+                    gray, 
+                    r,
+                    winSize = (3,3),
+                    zeroZone = (-1,-1),
+                    criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 100, 0.00001)
+                )
+
+            # TODO not using interpolateCornersCharuco
+            res2 = cv2.aruco.interpolateCornersCharuco(res[0],res[1],gray,board)
+            if res2[1] is not None and res2[2] is not None and len(res2[1])>3 and decimator%3==0:
+                cv2.aruco.drawDetectedCornersCharuco(gray,res2[1],res2[2])
+
+                cv2.imshow("frame", gray)
+                if cv2.waitKey(PREVIEW_TIME * 1000) & 0xFF == ord('y'):
+
+                    cv2.imwrite(SAVE_PATH + "calib_img" + str(frame_count) + ".png", gray)
+                    print "Captured frame #" + str(frame_count)
+                    frame_count += 1
+
+                    start_time = time.time()
+
+    cv2.imshow('frame', gray)
+
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+    decimator+=1
+
+    imsize = gray.shape
+
+yaml.dump({
+        'num_cols': cal_data['num_cols'],
+        'num_rows': cal_data['num_rows'],
+        'chess_size': cal_data['chess_size'],
+        'marker_size': cal_data['marker_size'],
+        'imsize': imsize
+    }, 
+    open('./boards/board.yaml', 'w'))
+
+stream.release()
+cv2.destroyAllWindows()
