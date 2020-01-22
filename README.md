@@ -8,7 +8,7 @@ cd catkin_ws
 ```
 2. You then need to clone this repository into the src directory of your catkin workspace. Make sure to execute this command from inside the top level of the workspace.
 ```
-git clone https://github.com/vanderbiltrobotics/NASA-RMC-2018-2019.git src
+git clone https://github.com/vanderbiltrobotics/lunabot-2020-master.git src
 ```
 The `src` folder of your catkin_ws should now contain all the packages in the repository.
 
