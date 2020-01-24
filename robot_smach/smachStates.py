@@ -26,7 +26,7 @@ class LocalizingWithCharuco(smach.State):
 		return 'Localized'
 
 
-class DriveToDigSpot(smach.State):
+class DrivingToDigSpot(smach.State):
 	def __init__(self, outcomes=['AtDigSpot', 'Lost']):
 	
 	def execute(self, data):
@@ -38,7 +38,7 @@ class DriveToDigSpot(smach.State):
 		return 'AtDigSpot'
 
 
-class Excavate(smach.State):
+class Excavating(smach.State):
 	def __init__(self, outcomes=['Excavated']):
 
 	def execute(self, data):
