@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>robot_simulation</name>
+  <name>simulation</name>
   <version>0.0.0</version>
   <description>The robot_simulation package</description>
 
