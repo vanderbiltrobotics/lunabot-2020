@@ -4,11 +4,12 @@ Package for controlling the excavator.
 
 
 Launches the excavation node along with rviz for visualization
+
 ```
-roslaunch robot_digging rviz_dig.launch
+roslaunch excavation rviz_dig.launch
 ```
 
-Run the following set of commands to get ez_publisher for publishing arm_cmd's easily:
+Run the following set of commands to get ez-publisher for publishing arm_cmd's easily:
 
 ```
 sudo apt-get install ros-melodic-rqt

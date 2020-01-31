@@ -27,7 +27,7 @@
   <link name="base_link">
     <visual>
       <geometry>
-	<mesh filename= "package://robot_simulation/betterbase.stl" scale="0.0254 0.0254 0.0254"/>
+	<mesh filename= "package://simulation/betterbase.stl" scale="0.0254 0.0254 0.0254"/>
         <!--<box size="${blength} ${bwidth} ${bheight}"/>-->
       </geometry>
       <origin rpy="0 0 0" xyz="0 0 ${clearance}"/>
@@ -37,7 +37,7 @@
     </visual>
     <collision>
       <geometry>
-	<mesh filename= "package://robot_simulation/betterbase.stl" scale="0.0254 0.0254 0.0254"/>
+	<mesh filename= "package://simulation/betterbase.stl" scale="0.0254 0.0254 0.0254"/>
         <!--<box size="${blength} ${bwidth} ${bheight}"/>-->
       </geometry>
       <origin rpy="0 0 0" xyz="0 0 ${clearance}"/>

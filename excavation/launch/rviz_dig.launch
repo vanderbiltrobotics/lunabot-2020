@@ -1,4 +1,4 @@
 <launch>
-  <include file="$(find robot_simulation)/launch/rviz.launch"/>
-  <node name="excavation_cmd" pkg="robot_digging" type="excavation_cmd.py" output="screen" />
+  <include file="$(find simulation)/launch/rviz.launch"/>
+  <node name="excavation_cmd" pkg="excavation" type="excavation_cmd.py" output="screen" />
 </launch>

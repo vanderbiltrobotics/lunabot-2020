@@ -8,13 +8,13 @@ Integrate namespaces of joints (wheels) with teleop, add environment, and upgrad
 Launches the simulation with no controllers set up and an empty environment.
 
 ```
-roslaunch robot_simulation gazebo_sim.launch
+roslaunch simulation gazebo_sim.launch
 ```
 
 Launches the simulation with ROS's differential drive controller, with a gui for contolling the velocity.
 
 ```
-roslaunch robot_simulation gazebo_sample_drive.launch
+roslaunch simulation gazebo_sample_drive.launch
 ```
 
 Note: No PID parameters are implemented, so you will get an error message for both of these launches, but it is secretly fine as ros_control just doesn't use PID in this case.
