@@ -96,43 +96,43 @@
   
   <m_joint name="base_to_arm_1" type="revolute"
            axis_xyz="0 1 0"
-           origin_rpy="0 0.5 0" origin_xyz="-0.4 0 0.15"
+           origin_rpy="0 0 0" origin_xyz="-0.4 0 0.15"
            parent="base_link" child="arm_1"
            limit_e="1000" limit_l="-3.14" limit_u="3.14" limit_v="0.5" />
            
   <m_link_cylinder name="arm_1"
-              origin_rpy="0 0 0" origin_xyz="0 0 0.15"
+              origin_rpy="0 0 0" origin_xyz="0 0 0.206"
               mass="1"
               ixx="0.01" ixy="0" ixz="0"
               iyy="0.01" iyz="0"
               izz="0.01"
-              radius="0.02" length="0.3" />         
+              radius="0.02" length="0.413" />
   <m_joint name="arm_1_to_arm_2" type="revolute"
            axis_xyz="0 1 0"
-           origin_rpy="0 0.5 0" origin_xyz="0 0 0.3"
+           origin_rpy="0 0 0" origin_xyz="0 0 0.413"
            parent="arm_1" child="arm_2"
            limit_e="1000" limit_l="-3.14" limit_u="3.14" limit_v="0.5" />
            
   <m_link_cylinder name="arm_2"
-              origin_rpy="0 0 0" origin_xyz="0 0 0.15"
+              origin_rpy="0 0 0" origin_xyz="0 0 0.182"
               mass="1"
               ixx="0.01" ixy="0" ixz="0"
               iyy="0.01" iyz="0"
               izz="0.01"
-              radius="0.02" length="0.3" />         
+              radius="0.02" length="0.365" />
   <m_joint name="arm_2_to_arm_3" type="revolute"
            axis_xyz="0 1 0"
-           origin_rpy="0 1 0" origin_xyz="0 0 0.3"
+           origin_rpy="0 0 0" origin_xyz="0 0 0.365"
            parent="arm_2" child="arm_3"
            limit_e="1000" limit_l="-3.14" limit_u="3.14" limit_v="0.5" />
            
   <m_link_cylinder name="arm_3"
-              origin_rpy="0 0 0" origin_xyz="0 0 0.15"
+              origin_rpy="0 0 0" origin_xyz="0 0 0.05"
               mass="1"
               ixx="0.01" ixy="0" ixz="0"
               iyy="0.01" iyz="0"
               izz="0.01"
-              radius="0.02" length="0.3" />         
+              radius="0.02" length="0.1" />         
               
     
 
