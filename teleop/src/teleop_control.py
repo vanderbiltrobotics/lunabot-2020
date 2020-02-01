@@ -132,8 +132,8 @@ class TeleopControl:
     # Callback for joystick data
     def process_joystick_data(self, msg):
         # Get motor velocity commands
-        lin_vel = msg.axes[JOYSTICK_AXIS_LEFT_Y]
-        ang_vel = msg.axes[JOYSTICK_AXIS_RIGHT_X]
+        left_input = msg.axes[JOYSTICK_AXIS_LEFT_Y]
+        right_input = msg.axes[JOYSTICK_AXIS_RIGHT_Y]
 
         # Get direction and accel_decel toggle states
         acc_dir_toggle = msg.buttons[JOYSTICK_BUTTON_RB]
@@ -165,8 +165,8 @@ class TeleopControl:
 
         # Drive twist
         drive_msg=Twist()
-        drive_msg.linear.x=lin_vel
-        drive_msg.angular.z=ang_vel*-1
+        drive_msg.linear.x=(left_input+right_input)/2.0
+        drive_msg.angular.z=(left_input-right_input)/2.0
         self.publishers["pub_drive_cmd"].publish(drive_msg)
 
         # TODO: publish excavation data
