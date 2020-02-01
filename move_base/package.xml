@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>robot_move_base</name>
+  <name>move_base</name>
   <version>0.0.0</version>
   <description>The robot_move_base package</description>
 
