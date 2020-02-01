@@ -234,6 +234,7 @@
 
   <!-- Nodes -->
   <group ns="$(arg namespace)">
+  <remap from="map" to="/rtabmap/proj_map"/>
      
     <!-- relays -->
     <group unless="$(arg stereo)">
