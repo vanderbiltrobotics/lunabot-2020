@@ -20,7 +20,6 @@ catkin_make              # Build all packages in the workspace
 
 Running the command `source {Path to catkin_ws}/catkin_ws/devel/setup.bash` or `source /opt/ros/melodic/setup.bash` will allow ROS to find your built packages. You will need to run this command each time you open a new terminal if you want ROS to find your packages. To avoid this, you can add that command to the end of your .bashrc and it will run automatically whenever you open a terminal.
 
-
 ## Notes on testing code
 
 1. Make a launch file (Look at the ros_teleop.launch file because it's a pretty simple example of a launch file and you can just build up from there).
