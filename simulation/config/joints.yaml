@@ -1,4 +1,3 @@
 # The joint state controller handles publishing transforms for any moving joints
-gazebo_joint_state_controller:
-  type: "joint_state_controller/JointStateController"
-  publish_rate: 50
+type: "joint_state_controller/JointStateController"
+publish_rate: 50
