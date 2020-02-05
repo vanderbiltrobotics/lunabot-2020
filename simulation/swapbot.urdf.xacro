@@ -77,9 +77,9 @@
         <inertia ixx="${ixx}" ixy="${ixy}" ixz="${ixz}" iyy="${iyy}" iyz="${iyz}" izz="${izz}" />
       </inertial>
       <collision>
-        <origin rpy="${origin_rpy}" xyz="${origin_xyz}*0.9" />
+        <origin rpy="${origin_rpy}" xyz="${origin_xyz}" />
         <geometry>
-          <cylinder radius="${radius}*0.9" length="${length}*0.9" />
+          <cylinder radius="${radius*0.9}" length="${length*0.9}" />
         </geometry>
       </collision>
       <visual>
