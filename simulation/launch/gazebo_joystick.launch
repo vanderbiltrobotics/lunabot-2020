@@ -15,8 +15,7 @@
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" />
   
   <!-- The following should be replaced by whatever the motor control team comes up with -->
-
-  <remap from="drive_cmd" to="gazebo_sample_drive_controller/cmd_vel"/>
+   <!-- remap from="drive_cmd" to="gazebo_sample_drive_controller/cmd_vel"/> -->
  <!-- joy node -->
   <node respawn="true" pkg="joy"
         type="joy_node" name="turtle_joy" >
@@ -38,4 +37,3 @@
 
 
 </launch>
-
