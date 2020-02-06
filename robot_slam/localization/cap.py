@@ -2,6 +2,14 @@ import cv2
 import time
 import yaml
 import numpy as np
+import rospy
+from sensor_msgs.msg import Image
+from std_msgs.msg import Bool
+from cv_bridge import CvBridge
+
+raw_image_publisher = rospy.Publisher('camera/raw_image', Image, queue_size=0)
+charuco_found_publisher = rospy.Publisher('camera/found_image', Image, queue_size=0)
+image_found_publisher = rospy.Publisher('camera/marker_found', Bool, queue_size=0)
 
 print cv2.__version__
 
@@ -58,6 +66,8 @@ while True:
                 cv2.aruco.drawDetectedCornersCharuco(gray,res2[1],res2[2])
 
                 cv2.imshow("frame", gray)
+                charuco_found_publisher.publish(bridge.cv2_to_imgmsg(gray, 'rgb8'))
+                image_found_publisher.publish(True)
                 if cv2.waitKey(PREVIEW_TIME * 1000) & 0xFF == ord('y'):
 
                     cv2.imwrite(SAVE_PATH + "calib_img" + str(frame_count) + ".png", gray)
@@ -65,6 +75,8 @@ while True:
                     frame_count += 1
 
                     start_time = time.time()
+            else:
+                image_found_publisher.publish(False)
 
     cv2.imshow('frame', gray)
 
@@ -73,6 +85,8 @@ while True:
     decimator+=1
 
     imsize = gray.shape
+
+    raw_image_publisher.publish(bridge.cv2_to_imgmsg(frame, 'rgb8'))
 
 yaml.dump({
         'num_cols': cal_data['num_cols'],
