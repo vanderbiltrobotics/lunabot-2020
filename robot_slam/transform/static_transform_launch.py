@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import json
 
 LAUNCH_FILENAME = 'static_broadcaster.launch'

@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 # Import required packages
 import cv2
 import os

@@ -1,4 +1,4 @@
 <launch>
-  <node name="charuco_test" pkg="ros_charuco_test" type="cap.py"/>
-  <node name="charuco" pkg="ros_charuco" type="charuco.py"/>
+  <node name="charuco_test" pkg="robot_slam" type="cap.py"/>
+  <node name="charuco" pkg="robot_slam" type="charuco.py"/>
 </launch>

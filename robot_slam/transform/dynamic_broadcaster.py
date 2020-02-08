@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import json
 import rospy
 import tf2_ros
