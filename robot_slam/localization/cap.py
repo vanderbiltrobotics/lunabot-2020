@@ -18,8 +18,8 @@ CALIBRATION_DATA_DIR = rospkg.RosPack().get_path('robot_slam')
 CALIBRATION_DATA_FILE = CALIBRATION_DATA_DIR + '/cam.yaml'
 
 DEVICE_NUM = 2
-SAVE_PATH = "./calib_images/"
-SAVE_PATH_YAML = "./calib_data/cam.yaml"
+#SAVE_PATH = "./calib_images/"
+#SAVE_PATH_YAML = "./calib_data/cam.yaml"
 CAPTURE_RATE = 1
 PREVIEW_TIME = 10
 
@@ -81,7 +81,7 @@ while True:
                     start_time = time.time()
             else:
                 image_found_publisher.publish(False)
-
+##
     cv2.imshow('frame', gray)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
