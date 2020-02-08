@@ -2,7 +2,7 @@
 <package format="2">
   <name>teleop</name>
   <version>0.0.0</version>
-  <description>The ros_teleop package</description>
+  <description>The teleop package for VUR 2020</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
@@ -58,6 +58,8 @@
   <exec_depend>roscpp</exec_depend>
   <exec_depend>rospy</exec_depend>
   <exec_depend>std_msgs</exec_depend>
+
+  <depend>joy</depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->
