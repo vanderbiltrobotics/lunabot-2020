@@ -34,6 +34,7 @@ import rospy
 from geometry_msgs.msg import Twist, Pose2D
 from sensor_msgs.msg import Joy
 from std_msgs.msg import Float64, String
+from teleop.msg import DriveCommandOutput
 
 
 JOYSTICK_BUTTON_A = 0
@@ -64,7 +65,8 @@ class TeleopControl:
     def __init__(self):
         # Initialize drive speed publishers
         self.publishers = {
-            "pub_drive_cmd": rospy.Publisher('drive_cmd', Twist, queue_size=0),
+            "pub_drive_twist": rospy.Publisher('drive_twist', Twist, queue_size=0),
+            "pub_drive_cmd": rospy.Publisher('pub_drive_cmd', DriveCommandOutput, queue_size=0),
             "pub_dep_spool": rospy.Publisher('dep_spool', Float64, queue_size=0),
             "pub_dep_linacc": rospy.Publisher('dep_linacc', Float64, queue_size=0),
             "pub_exc_pose": rospy.Publisher('exc_pose', Pose2D, queue_size=0)
@@ -167,7 +169,13 @@ class TeleopControl:
         drive_msg=Twist()
         drive_msg.linear.x=(left_input+right_input)/2.0
         drive_msg.angular.z=(left_input-right_input)/2.0
-        self.publishers["pub_drive_cmd"].publish(drive_msg)
+        self.publishers["pub_drive_twist"].publish(drive_msg)
+
+        # Drive output
+        drive_output = DriveCommandOutput()
+        drive_output.left = left_input
+        drive_output.right = right_input
+        self.publishers["pub_drive_cmd"].publish(drive_output)
 
         # TODO: publish excavation data
 
