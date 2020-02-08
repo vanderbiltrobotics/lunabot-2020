@@ -13,6 +13,10 @@ image_found_publisher = rospy.Publisher('camera/marker_found', Bool, queue_size=
 
 print cv2.__version__
 
+BOARD_FILE = rospkg.RosPack().get_path('robot_slam') + '/board.yaml'
+CALIBRATION_DATA_DIR = rospkg.RosPack().get_path('robot_slam')
+CALIBRATION_DATA_FILE = CALIBRATION_DATA_DIR + '/cam.yaml'
+
 DEVICE_NUM = 2
 SAVE_PATH = "./calib_images/"
 SAVE_PATH_YAML = "./calib_data/cam.yaml"
@@ -21,7 +25,7 @@ PREVIEW_TIME = 10
 
 dictionary = cv2.aruco.Dictionary_get(cv2.aruco.DICT_6X6_250)
 
-cal_data = yaml.load(open('./boards/board.yaml', 'r'), Loader=yaml.Loader)
+cal_data = yaml.load(open(BOARD_FILE, 'r'), Loader=yaml.Loader)
 board = cv2.aruco.CharucoBoard_create(
     cal_data['num_cols'],
     cal_data['num_rows'],
@@ -70,7 +74,7 @@ while True:
                 image_found_publisher.publish(True)
                 if cv2.waitKey(PREVIEW_TIME * 1000) & 0xFF == ord('y'):
 
-                    cv2.imwrite(SAVE_PATH + "calib_img" + str(frame_count) + ".png", gray)
+                    cv2.imwrite(CALIBRATION_DATA_DIR + "calib_img" + str(frame_count) + ".png", gray)
                     print "Captured frame #" + str(frame_count)
                     frame_count += 1
 
@@ -95,7 +99,7 @@ yaml.dump({
         'marker_size': cal_data['marker_size'],
         'imsize': imsize
     }, 
-    open('./boards/board.yaml', 'w'))
+    open(BOARD_FILE, 'w'))
 
 stream.release()
 cv2.destroyAllWindows()

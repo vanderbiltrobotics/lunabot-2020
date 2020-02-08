@@ -1,4 +1,5 @@
 import rospy
+import rospkg
 import cv2
 import numpy as np
 from sensor_msgs.msg import Image
@@ -9,14 +10,17 @@ import tf2_ros
 import yaml
 print(cv2.__version__)
 
-cal_data = yaml.load(open('./boards/board.yaml', 'r'), Loader=yaml.Loader)
+BOARD_FILE = rospkg.RosPack().get_path('robot_slam') + '/board.yaml'
+CALIBRATION_DATA_FILE = rospkg.RosPack().get_path('robot_slam') + '/cam.yaml'
+
+cal_data = yaml.load(open(BOARD_FILE, 'r'), Loader=yaml.Loader)
 board = cal_data['board']
 print board.getSquareLength()
 
 imboard = board.draw((1000, 1400))
 cv2.imwrite('charuco.jpg', imboard)
 
-cal_data = yaml.load(open('./calib_data/cam.yaml', 'r'), Loader=yaml.Loader)
+cal_data = yaml.load(open(CALIBRATION_DATA_FILE, 'r'), Loader=yaml.Loader)
 mtx = np.asarray(cal_data['camera_matrix'])
 dist = np.asarray(cal_data['dist_coefficients'])
 p_rvec = None
