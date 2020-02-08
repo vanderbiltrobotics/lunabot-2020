@@ -45,7 +45,7 @@ for fname in fnames:
     res = cv2.aruco.detectMarkers(gray, board.dictionary, parameters=parameters)
     cv2.aruco.refineDetectedMarkers(gray, board, res[0], res[1], res[2])
 
-    print res[0], res[1]
+    print(res[0], res[1])
     if len(res[0])>0:
         for r in res[0]:
             cv2.cornerSubPix(gray, r,
@@ -66,26 +66,26 @@ for fname in fnames:
                 aruco_ids.append(res2[2])
 
                 # Done with this frame
-                print "-- processed " + fname + " --"
+                print("-- processed " + fname + " --")
 
             # Otherwise, skip the frame
             else:
-                print "-- skipped frame " + fname + " --"
+                print("-- skipped frame " + fname + " --")
 
     else:
-        print "-- unable to find corners in " + fname + ", skipped frame --"
+        print("-- unable to find corners in " + fname + ", skipped frame --")
 
 cv2.destroyAllWindows()
 
 # TODO calibrateCameraCharucoExtended vs current
 ret, mtx, dist, rvecs, tvecs = cv2.aruco.calibrateCameraCharuco(image_points,aruco_ids,board,imsize,None,None,flags=cv2.CALIB_ZERO_TANGENT_DIST)
 
-print "\n=========\n RESULTS\n=========\n"
-print "Dist. Coeffifients: "
-print dist
-print "\nCamera Matrix"
-print mtx
-print "\nData saved to " + SAVE_PATH_YAML
+print("\n=========\n RESULTS\n=========\n")
+print("Dist. Coeffifients: ")
+print(dist)
+print("\nCamera Matrix")
+print(mtx)
+print("\nData saved to " + SAVE_PATH_YAML)
 
 data = {"camera_matrix": np.asarray(mtx).tolist(),
         "dist_coefficients": np.asarray(dist).tolist(),

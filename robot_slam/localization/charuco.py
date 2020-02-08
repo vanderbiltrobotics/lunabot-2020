@@ -9,14 +9,14 @@ from std_msgs.msg import Bool
 from cv_bridge import CvBridge
 import tf2_ros
 import yaml
-print(cv2.__version__)
+print((cv2.__version__))
 
 BOARD_FILE = rospkg.RosPack().get_path('robot_slam') + '/board.yaml'
 CALIBRATION_DATA_FILE = rospkg.RosPack().get_path('robot_slam') + '/cam.yaml'
 
 cal_data = yaml.load(open(BOARD_FILE, 'r'), Loader=yaml.Loader)
 board = cal_data['board']
-print board.getSquareLength()
+print(board.getSquareLength())
 
 imboard = board.draw((1000, 1400))
 cv2.imwrite('charuco.jpg', imboard)
@@ -66,8 +66,8 @@ while True:
             cv2.aruco.drawDetectedCornersCharuco(gray,res2[1],res2[2])
             retval, rvec, tvec = cv2.aruco.estimatePoseCharucoBoard(res2[1], res2[2], board, mtx, dist, rvec=p_rvec, tvec=p_tvec, useExtrinsicGuess=False)
             if retval:
-                print 'rvec:', rvec
-                print 'tvec:', tvec
+                print('rvec:', rvec)
+                print('tvec:', tvec)
                 p_rvec = rvec
                 p_tvec = tvec
 

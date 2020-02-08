@@ -12,7 +12,7 @@ raw_image_publisher = rospy.Publisher('camera/raw_image', Image, queue_size=0)
 charuco_found_publisher = rospy.Publisher('camera/found_image', Image, queue_size=0)
 image_found_publisher = rospy.Publisher('camera/marker_found', Bool, queue_size=0)
 
-print cv2.__version__
+print(cv2.__version__)
 
 BOARD_FILE = rospkg.RosPack().get_path('robot_slam') + '/board.yaml'
 CALIBRATION_DATA_DIR = rospkg.RosPack().get_path('robot_slam')
@@ -54,7 +54,7 @@ while True:
         # TODO not using refineDetectedMarkers
         cv2.aruco.refineDetectedMarkers(gray, board, res[0], res[1], res[2])
 
-        print res[0], res[1]
+        print(res[0], res[1])
         if len(res[0])>0:
             for r in res[0]:
                 cv2.cornerSubPix(
@@ -76,7 +76,7 @@ while True:
                 if cv2.waitKey(PREVIEW_TIME * 1000) & 0xFF == ord('y'):
 
                     cv2.imwrite(CALIBRATION_DATA_DIR + "calib_img" + str(frame_count) + ".png", gray)
-                    print "Captured frame #" + str(frame_count)
+                    print("Captured frame #" + str(frame_count))
                     frame_count += 1
 
                     start_time = time.time()
