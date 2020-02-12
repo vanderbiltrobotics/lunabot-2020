@@ -15,7 +15,17 @@ BOARD_FILE = rospkg.RosPack().get_path('robot_slam') + '/board.yaml'
 CALIBRATION_DATA_FILE = rospkg.RosPack().get_path('robot_slam') + '/cam.yaml'
 
 cal_data = yaml.load(open(BOARD_FILE, 'r'), Loader=yaml.Loader)
-board = cal_data['board']
+#board = cal_data['board']
+dictionary = cv2.aruco.Dictionary_get(cv2.aruco.DICT_6X6_250)
+board = cv2.aruco.CharucoBoard_create(
+    cal_data['num_cols'],
+    cal_data['num_rows'],
+    cal_data['chess_size'],
+    cal_data['marker_size'],
+    dictionary
+)
+parameters =  cv2.aruco.DetectorParameters_create()
+
 print(board.getSquareLength())
 
 imboard = board.draw((1000, 1400))
