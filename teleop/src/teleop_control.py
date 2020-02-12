@@ -35,6 +35,7 @@ from geometry_msgs.msg import Twist, Pose2D
 from sensor_msgs.msg import Joy
 from std_msgs.msg import Float64, String
 from teleop.msg import DriveCommandOutput
+import math
 
 
 JOYSTICK_BUTTON_A = 0
@@ -59,6 +60,24 @@ JOYSTICK_AXIS_DPAD_X = 6 # 1 left, -1 right
 JOYSTICK_AXIS_DPAD_Y = 7 # -1 down, 1 up
 
 
+# Constants for Excavation
+EXCAVATION_X_START = 0
+EXCAVATION_X_MIN = 0
+EXCAVATION_X_MAX = 1
+
+EXCAVATION_Y_START = 0
+EXCAVATION_Y_MIN = -1
+EXCAVATION_Y_MAX = 1
+
+EXCAVATION_THETA_START = 0
+EXCAVATION_THETA_MIN = 0
+EXCAVATION_THETA_MAX = 2 * math.pi
+
+EXCAVATION_LINEAR_RATE = 0.3
+
+ROSPY_RATE = 60
+
+
 class TeleopControl:
 
     # Constructor
@@ -66,7 +85,7 @@ class TeleopControl:
         # Initialize drive speed publishers
         self.publishers = {
             "pub_drive_twist": rospy.Publisher('drive_twist', Twist, queue_size=0),
-            "pub_drive_cmd": rospy.Publisher('pub_drive_cmd', DriveCommandOutput, queue_size=0),
+            "pub_drive_cmd": rospy.Publisher('drive_cmd', DriveCommandOutput, queue_size=0),
             "pub_dep_spool": rospy.Publisher('dep_spool', Float64, queue_size=0),
             "pub_dep_linacc": rospy.Publisher('dep_linacc', Float64, queue_size=0),
             "pub_exc_pose": rospy.Publisher('exc_pose', Pose2D, queue_size=0)
@@ -86,6 +105,13 @@ class TeleopControl:
             "dep_spool_start": 0.1,
             "dep_linacc_start": 0.1
         }
+
+        self.excavation_x = 0
+        self.excavation_y = 0
+        self.excavation_theta = 0
+
+        self.excavation_input_x = 0
+        self.excavation_input_y = 0
 
         # Initialize subscribers
         self.joy_sub = rospy.Subscriber("joy", Joy, self.process_joystick_data)
@@ -150,6 +176,10 @@ class TeleopControl:
         lsc_cnv_acc_toggle = msg.axes[JOYSTICK_AXIS_DPAD_Y]
 
         # TODO: get data for Pose2D for excavation from controller
+	self.excavation_input_x = -msg.axes[JOYSTICK_AXIS_DPAD_X]
+        self.excavation_input_y = msg.axes[JOYSTICK_AXIS_DPAD_Y]
+        self.excavation_theta_right = msg.buttons[JOYSTICK_BUTTON_RB]
+        self.excavation_theta_left = msg.buttons[JOYSTICK_BUTTON_LB]
 
         # Update accel_direction
         if self.state["acc_dir_toggle"] == 1 and acc_dir_toggle == 0:
@@ -189,6 +219,18 @@ class TeleopControl:
             # Publish
             self.publishers["pub_" + id].publish(dig_msg)
 
+
+    def updateExcPose(self):
+        self.excavation_x += self.excavation_input_x * EXCAVATION_LINEAR_RATE/ROSPY_RATE
+        self.excavation_y += self.excavation_input_y * EXCAVATION_LINEAR_RATE/ROSPY_RATE
+
+        self.excavation_x = max(EXCAVATION_X_MIN, min(self.excavation_x, EXCAVATION_X_MAX))
+        self.excavation_y = max(EXCAVATION_Y_MIN, min(self.excavation_y, EXCAVATION_Y_MAX))
+        
+        excavation_msg = Pose2D(self.excavation_x, self.excavation_y, 0)
+        self.publishers["pub_exc_pose"].publish(excavation_msg)
+        
+
 if __name__ == '__main__':
     # Initialize as ROS node
     rospy.init_node('teleop_control')
@@ -199,5 +241,9 @@ if __name__ == '__main__':
     # Ready to go
     rospy.loginfo("Teleop Control initialized...")
 
+    rate = rospy.Rate(ROSPY_RATE)
+
     # Loop continuously
-    rospy.spin()
+    while not rospy.is_shutdown():
+        control.updateExcPose()
+        rate.sleep()
