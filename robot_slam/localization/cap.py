@@ -8,11 +8,13 @@ import rospy
 from sensor_msgs.msg import Image
 from std_msgs.msg import Bool
 from cv_bridge import CvBridge
-
+rospy.init_node('aruco_localization')
 raw_image_publisher = rospy.Publisher('camera/raw_image', Image, queue_size=0)
 charuco_found_publisher = rospy.Publisher('camera/found_image', Image, queue_size=0)
 image_found_publisher = rospy.Publisher('camera/marker_found', Bool, queue_size=0)
-
+#raw_image_publisher.init_node()
+#charuco_found_publisher.init_node()
+#image_found_publisher.init_node()
 print(cv2.__version__)
 
 BOARD_FILE = rospkg.RosPack().get_path('robot_slam') + '/board.yaml'
@@ -24,6 +26,8 @@ DEVICE_NUM = 2
 #SAVE_PATH_YAML = "./calib_data/cam.yaml"
 CAPTURE_RATE = 1
 PREVIEW_TIME = 10
+
+bridge = CvBridge()
 
 dictionary = cv2.aruco.Dictionary_get(cv2.aruco.DICT_6X6_250)
 
@@ -92,7 +96,7 @@ while True:
 
     imsize = gray.shape
 
-    raw_image_publisher.publish(bridge.cv2_to_imgmsg(frame, 'rgb8'))
+    raw_image_publisher.publish(bridge.cv2_to_imgmsg(gray, 'rgb8'))
 
 yaml.dump({
         'num_cols': cal_data['num_cols'],
