@@ -2,6 +2,7 @@
 import cv2
 import time
 import yaml
+import rospkg
 import numpy as np
 import rospy
 from sensor_msgs.msg import Image
@@ -15,8 +16,8 @@ image_found_publisher = rospy.Publisher('camera/marker_found', Bool, queue_size=
 print(cv2.__version__)
 
 BOARD_FILE = rospkg.RosPack().get_path('robot_slam') + '/board.yaml'
-CALIBRATION_DATA_DIR = rospkg.RosPack().get_path('robot_slam')
-CALIBRATION_DATA_FILE = CALIBRATION_DATA_DIR + '/cam.yaml'
+#CALIBRATION_DATA_DIR = rospkg.RosPack().get_path('robot_slam')
+#CALIBRATION_DATA_FILE = CALIBRATION_DATA_DIR + '/cam.yaml'
 
 DEVICE_NUM = 2
 #SAVE_PATH = "./calib_images/"
@@ -75,7 +76,7 @@ while True:
                 image_found_publisher.publish(True)
                 if cv2.waitKey(PREVIEW_TIME * 1000) & 0xFF == ord('y'):
 
-                    cv2.imwrite(CALIBRATION_DATA_DIR + "calib_img" + str(frame_count) + ".png", gray)
+                    #cv2.imwrite(CALIBRATION_DATA_DIR + "calib_img" + str(frame_count) + ".png", gray)
                     print("Captured frame #" + str(frame_count))
                     frame_count += 1
 

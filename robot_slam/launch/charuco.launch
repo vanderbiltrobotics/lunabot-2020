@@ -1,4 +1,3 @@
 <launch>
   <node name="charuco_test" pkg="robot_slam" type="cap.py"/>
-  <node name="charuco" pkg="robot_slam" type="charuco.py"/>
 </launch>
