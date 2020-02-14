@@ -21,7 +21,7 @@ BOARD_FILE = rospkg.RosPack().get_path('robot_slam') + '/board.yaml'
 #CALIBRATION_DATA_DIR = rospkg.RosPack().get_path('robot_slam')
 #CALIBRATION_DATA_FILE = CALIBRATION_DATA_DIR + '/cam.yaml'
 
-DEVICE_NUM = 2
+DEVICE_NUM = 0
 #SAVE_PATH = "./calib_images/"
 #SAVE_PATH_YAML = "./calib_data/cam.yaml"
 CAPTURE_RATE = 1
@@ -53,6 +53,8 @@ while True:
 
     ret, gray = stream.read()
 
+    gray = cv2.cvtColor(gray, cv2.COLOR_BGR2GRAY)
+
     if time.time() - start_time > CAPTURE_RATE:
 
         res = cv2.aruco.detectMarkers(gray, board.dictionary, parameters=parameters)
@@ -76,7 +78,7 @@ while True:
                 cv2.aruco.drawDetectedCornersCharuco(gray,res2[1],res2[2])
 
                 cv2.imshow("frame", gray)
-                charuco_found_publisher.publish(bridge.cv2_to_imgmsg(gray, 'rgb8'))
+                charuco_found_publisher.publish(bridge.cv2_to_imgmsg(gray, '8UC1'))
                 image_found_publisher.publish(True)
                 if cv2.waitKey(PREVIEW_TIME * 1000) & 0xFF == ord('y'):
 
@@ -96,7 +98,7 @@ while True:
 
     imsize = gray.shape
 
-    raw_image_publisher.publish(bridge.cv2_to_imgmsg(gray, 'rgb8'))
+    raw_image_publisher.publish(bridge.cv2_to_imgmsg(gray, '8UC1'))
 
 yaml.dump({
         'num_cols': cal_data['num_cols'],
