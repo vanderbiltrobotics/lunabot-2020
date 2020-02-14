@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 # Import required packages
 import cv2
 import os
@@ -10,7 +10,7 @@ SAVE_PATH_YAML = "./calib_data/cam.yaml"
 
 dictionary = cv2.aruco.Dictionary_get(cv2.aruco.DICT_6X6_250)
 
-cal_data = yaml.load(open('./boards/board.yaml', 'r'), Loader=yaml.Loader)
+cal_data = yaml.load(open('../board.yaml', 'r'), Loader=yaml.Loader)
 board = cv2.aruco.CharucoBoard_create(
             cal_data['num_cols'],
             cal_data['num_rows'],
@@ -31,7 +31,7 @@ fnames = os.listdir(OPEN_PATH)
 # we find in the image using detectMarkers.
 image_points = []
 
-imsize = cal_data["imsize"]
+imsize = (4000, 4000)
 aruco_ids = []
 decimator = 0
 frame_count = 0
