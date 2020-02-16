@@ -9,9 +9,9 @@
     <arg name="model" value="$(arg model)" />
   </include>
   
-  <!-- Needs to be uncommented if joint contoller is not implemented yet... 
+  <!-- Needs to be uncommented if joint contoller is not implemented yet... -->
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
-  --> 
+  
 
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" />
   
@@ -33,8 +33,9 @@
             file="$(find simulation)/config/sampledrive.yaml"
             ns="gazebo_sample_drive_controller" />	
 
+<!-- This is fucking broken, see https://discourse.ros.org/t/ros-control-abi-breakage-in-melodic-2020-02/12681
   <node name="gazebo_controller_spawner" pkg="controller_manager" type="spawner"
     args="gazebo_joint_state_controller gazebo_sample_drive_controller"/>
-
+--> 
 
 </launch>
