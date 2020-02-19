@@ -4,7 +4,7 @@ import rospkg
 import cv2
 import numpy as np
 from sensor_msgs.msg import Image
-from geometry_msgs.msg import Pose
+from geometry_msgs.msg import Pose, PoseStamped
 from std_msgs.msg import Bool
 from cv_bridge import CvBridge
 import tf2_ros
@@ -47,10 +47,10 @@ tfBuffer = tf2_ros.Buffer()
 tfListener = tf2_ros.TransformListener(tfBuffer)
 raw_image_publisher = rospy.Publisher('camera/raw_image', Image, queue_size=0)
 detected_marker_image_publisher = rospy.Publisher('camera/detected_image', Image, queue_size=0)
-marker_pose_publisher = rospy.Publisher('charuco/marker_pose', Pose, queue_size=0)
+marker_pose_publisher = rospy.Publisher('charuco/marker_pose', PoseStamped, queue_size=0)
 robot_pose_publisher = rospy.Publisher('charuco/rover_pose', Pose, queue_size=0)
 marker_detected_publisher = rospy.Publisher('charuco/marker_detected', Bool, queue_size=0)
-
+counter = 0
 while True:
     ret, frame = cap.read()
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -89,15 +89,19 @@ while True:
                 rvec, _ = cv2.Rodrigues(R)
 
                 marker_detected.data = True
-                marker_pose = Pose()
+                marker_pose = PoseStamped()
                 quat = tf.transformations.quaternion_from_euler(rvec[1, 0], rvec[0, 0], -rvec[2, 0])
-                marker_pose.position.x = tvec[2, 0]
-                marker_pose.position.y = tvec[0, 0]
-                marker_pose.position.z = tvec[1, 0]
-                marker_pose.orientation.x = quat[0]
-                marker_pose.orientation.y = quat[1]
-                marker_pose.orientation.z = quat[2]
-                marker_pose.orientation.w = quat[3]
+		marker_pose.header.frame_id = "camera_link"
+		marker_pose.header.stamp = rospy.Time.now()
+		marker_pose.header.seq = counter
+		counter = counter + 1
+                marker_pose.pose.position.x = tvec[2, 0]
+                marker_pose.pose.position.y = tvec[0, 0]
+                marker_pose.pose.position.z = tvec[1, 0]
+                marker_pose.pose.orientation.x = quat[0]
+                marker_pose.pose.orientation.y = quat[1]
+                marker_pose.pose.orientation.z = quat[2]
+                marker_pose.pose.orientation.w = quat[3]
                 marker_pose_publisher.publish(marker_pose)
                 robot_pose = Pose()
                 #trans = tfBuffer.lookup_transform(robot_frame, world_frame, rospy.Time(0))
@@ -111,7 +115,7 @@ while True:
                 #robot_pose_publisher.publish(robot_pose)
                 detected_marker_image_publisher.publish(bridge.cv2_to_imgmsg(gray2, '8UC1'))
 
-    cv2.imshow('frame', gray2)
+    #cv2.imshow('frame', gray2)
     decimator+=1
 
     marker_detected_publisher.publish(marker_detected)
