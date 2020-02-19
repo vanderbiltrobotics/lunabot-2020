@@ -1,0 +1,4 @@
+<launch>
+  <include file="$(find simulation)/launch/rviz.launch"/>
+  <node name="excavation" pkg="motor_control" type="ExcavationCommand.py" output="screen" />
+</launch>

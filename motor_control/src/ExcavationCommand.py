@@ -19,7 +19,7 @@ JOINT_3_LIM = [-math.pi *3/4, math.pi * 3 / 4]
 """Also receives current msg's from the Talons and can give a stop command if necessary"""
 
 
-class ExcavationCmd:
+class ExcavationCommand:
 
     def cmd_callback(self,msg):
         ang = self.ik(msg)
@@ -111,4 +111,4 @@ class ExcavationCmd:
 
 
 if __name__ == '__main__':
-    foo = ExcavationCmd()
+    foo = ExcavationCommand()
