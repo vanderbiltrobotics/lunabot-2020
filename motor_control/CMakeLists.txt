@@ -132,7 +132,7 @@ endif ()
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/phoenix_node.cpp)
 #add_executable(phoenix_node ${PROJECT_SOURCE_DIR}/example.cpp)
-add_executable(motor_control_cmd_example ${PROJECT_SOURCE_DIR}/src/CmdExmaple.cpp)
+add_executable(motor_control_cmd_example ${PROJECT_SOURCE_DIR}/src/CmdExample.cpp)
 add_dependencies(motor_control_cmd_example ${PROJECT_NAME}_gencfg ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 add_executable(motor_control_node
