@@ -8,11 +8,13 @@ from geometry_msgs.msg import Pose
 from std_msgs.msg import Bool
 from cv_bridge import CvBridge
 import tf2_ros
+import tf
 import yaml
 print((cv2.__version__))
 
+rospy.init_node('aruco_localization')
 BOARD_FILE = rospkg.RosPack().get_path('robot_slam') + '/board.yaml'
-CALIBRATION_DATA_FILE = rospkg.RosPack().get_path('robot_slam') + '/cam.yaml'
+CALIBRATION_DATA_FILE = rospkg.RosPack().get_path('robot_slam') + '/localization/calibration/camera_b.yaml'
 
 cal_data = yaml.load(open(BOARD_FILE, 'r'), Loader=yaml.Loader)
 #board = cal_data['board']
@@ -43,17 +45,16 @@ decimator = 0
 bridge = CvBridge()
 tfBuffer = tf2_ros.Buffer()
 tfListener = tf2_ros.TransformListener(tfBuffer)
-
 raw_image_publisher = rospy.Publisher('camera/raw_image', Image, queue_size=0)
 detected_marker_image_publisher = rospy.Publisher('camera/detected_image', Image, queue_size=0)
 marker_pose_publisher = rospy.Publisher('charuco/marker_pose', Pose, queue_size=0)
 robot_pose_publisher = rospy.Publisher('charuco/rover_pose', Pose, queue_size=0)
-marker_detected_publisher = rospy.Publisher('charuco/marker_deteced', Bool, queue_size=0)
+marker_detected_publisher = rospy.Publisher('charuco/marker_detected', Bool, queue_size=0)
 
 while True:
     ret, frame = cap.read()
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    parameters =  cv2.aruco.DetectorParameters_create()
+    gray2 = gray
 
     marker_detected = Bool()
     marker_detected.data = False
@@ -99,22 +100,22 @@ while True:
                 marker_pose.orientation.w = quat[3]
                 marker_pose_publisher.publish(marker_pose)
                 robot_pose = Pose()
-                trans = tfBuffer.lookup_transform(robot_frame, world_frame, rospy.Time(0))
-                robot_pose.position.x = trans.translation.x
-                robot_pose.position.y = trans.translation.y
-                robot_pose.position.z = trans.translation.z
-                robot_pose.orientation.x = trans.rotation.x
-                robot_pose.orientation.y = trans.rotation.y
-                robot_pose.orientation.z = trans.rotation.z
-                robot_pose.orientation.w = trans.rotation.w
-                robot_pose_publisher.publish(robot_pose)
-                detected_marker_image_publisher.publish(bridge.cv2_to_imgmsg(frame, 'rgb8'))
+                #trans = tfBuffer.lookup_transform(robot_frame, world_frame, rospy.Time(0))
+                #robot_pose.position.x = trans.translation.x
+                #robot_pose.position.y = trans.translation.y
+                #robot_pose.position.z = trans.translation.z
+                #robot_pose.orientation.x = trans.rotation.x
+                #robot_pose.orientation.y = trans.rotation.y
+                #robot_pose.orientation.z = trans.rotation.z
+                #robot_pose.orientation.w = trans.rotation.w
+                #robot_pose_publisher.publish(robot_pose)
+                detected_marker_image_publisher.publish(bridge.cv2_to_imgmsg(gray2, '8UC1'))
 
-    cv2.imshow('frame', gray)
+    cv2.imshow('frame', gray2)
     decimator+=1
 
     marker_detected_publisher.publish(marker_detected)
-    raw_image_publisher.publish(bridge.cv2_to_imgmsg(frame, 'rgb8'))
+    raw_image_publisher.publish(bridge.cv2_to_imgmsg(gray2, '8UC1'))
 
 cap.release()
 cv2.destroyAllWindows()

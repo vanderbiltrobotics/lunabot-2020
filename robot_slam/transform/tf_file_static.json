@@ -1,5 +1,16 @@
 {
     "transforms" : [
+	{
+	    "frame_id" : "map",
+	    "child_id" : "charuco_board_origin",
+            "trans_x" : 0,
+            "trans_y" : 0,
+            "trans_z" : 0,
+       	    "rot_x" : 0,
+      	    "rot_y" : 0,
+            "rot_z" : 0,
+            "rot_w" : 1
+	},
         {
             "frame_id" : "camera_mount_base",
             "child_id" : "robot_frame_BL",
