@@ -79,7 +79,7 @@ generate_dynamic_reconfigure_options(
 )
 
 ## Generate launch files
-roslaunch_add_file_check(${PROJECT_SOURCE_DIR}/launch/example.launch)
+roslaunch_add_file_check(${PROJECT_SOURCE_DIR}/launch/motor_control.launch)
 
 ###################################
 ## catkin specific configuration ##
@@ -132,8 +132,8 @@ endif ()
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/phoenix_node.cpp)
 #add_executable(phoenix_node ${PROJECT_SOURCE_DIR}/example.cpp)
-add_executable(motor_control_cmd_example ${PROJECT_SOURCE_DIR}/src/CmdExample.cpp)
-add_dependencies(motor_control_cmd_example ${PROJECT_NAME}_gencfg ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_executable(motor_control_cmd ${PROJECT_SOURCE_DIR}/src/DriveCommand.cpp)
+add_dependencies(motor_control_cmd ${PROJECT_NAME}_gencfg ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 add_executable(motor_control_node
         ${PROJECT_SOURCE_DIR}/src/TalonNode.cpp
@@ -147,7 +147,7 @@ add_dependencies(motor_control_node ${PROJECT_NAME}_gencfg ${${PROJECT_NAME}_EXP
 #add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(motor_control_cmd_example
+target_link_libraries(motor_control_cmd
         ${catkin_LIBRARIES}
         Threads::Threads
         CTRE_Phoenix CTRE_PhoenixCCI CTRE_PhoenixPlatformLinuxSocketCan CTRE_PhoenixCanutils
@@ -171,7 +171,7 @@ install(FILES
         DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
         )
 ## Install node executables
-install(TARGETS motor_control_node motor_control_cmd_example
+install(TARGETS motor_control_node motor_control_cmd
         ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
         LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
         RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}

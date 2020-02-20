@@ -56,7 +56,7 @@ class ExcavationCommand:
             self.current_bad = False
 
             # Initialize subscribers
-            self.cmd_sub = rospy.Subscriber("arm_cmd", Pose2D, self.cmd_callback)
+            self.cmd_sub = rospy.Subscriber("exc_pose", Pose2D, self.cmd_callback)
             self.talon_sub = rospy.Subscriber("current", Float32, self.talon_callback)
 
             # Publishers, ang_pub is for simulation purposes

@@ -33,7 +33,7 @@ int main(int argc, char** argv)
 {
     ros::init(argc, argv, "motor_controller");
     ros::NodeHandle nh;
-    ros::Subscriber sub = nh.subscribe("cmd_vel", 1, cmdCallback);
+    ros::Subscriber sub = nh.subscribe("drive_twist", 1, cmdCallback);
 
     ros::Publisher fl = nh.advertise<std_msgs::Float64>("/front_left/set_percent_output", 1);
     ros::Publisher fr = nh.advertise<std_msgs::Float64>("/front_right/set_percent_output", 1);
