@@ -19,7 +19,7 @@ JOINT_3_LIM = [-math.pi *3/4, math.pi * 3 / 4]
 """Also receives current msg's from the Talons and can give a stop command if necessary"""
 
 
-class ExcavationCmd:
+class ExcavationCommand:
 
     def cmd_callback(self,msg):
         ang = self.ik(msg)
@@ -56,7 +56,7 @@ class ExcavationCmd:
             self.current_bad = False
 
             # Initialize subscribers
-            self.cmd_sub = rospy.Subscriber("arm_cmd", Pose2D, self.cmd_callback)
+            self.cmd_sub = rospy.Subscriber("exc_pose", Pose2D, self.cmd_callback)
             self.talon_sub = rospy.Subscriber("current", Float32, self.talon_callback)
 
             # Publishers, ang_pub is for simulation purposes
@@ -111,4 +111,4 @@ class ExcavationCmd:
 
 
 if __name__ == '__main__':
-    foo = ExcavationCmd()
+    foo = ExcavationCommand()
