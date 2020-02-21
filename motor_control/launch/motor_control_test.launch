@@ -1,4 +1,4 @@
 <launch>
-    <node pkg="motor_control" type="motor_control_cmd" name="motor_control" respawn="false" />
+    <node pkg="motor_control" type="motor_control_cmd" name="motor_control" />
     <node name="excavation" pkg="motor_control" type="ExcavationCommand.py" />
 </launch>

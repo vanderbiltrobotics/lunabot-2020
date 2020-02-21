@@ -61,7 +61,7 @@ JOYSTICK_AXIS_DPAD_Y = 7 # -1 down, 1 up
 
 
 # Constants for Excavation
-EXCAVATION_X_START = 0
+EXCAVATION_X_START = 0.4
 EXCAVATION_X_MIN = 0
 EXCAVATION_X_MAX = 1
 
@@ -69,9 +69,9 @@ EXCAVATION_Y_START = 0
 EXCAVATION_Y_MIN = -1
 EXCAVATION_Y_MAX = 1
 
-EXCAVATION_THETA_START = 0
+EXCAVATION_THETA_START = 3.14
 EXCAVATION_THETA_MIN = 0
-EXCAVATION_THETA_MAX = 2 * math.pi
+EXCAVATION_THETA_MAX = 2 * 3.14
 
 EXCAVATION_LINEAR_RATE = 0.3
 
@@ -106,9 +106,9 @@ class TeleopControl:
             "dep_linacc_start": 0.1
         }
 
-        self.excavation_x = 0
-        self.excavation_y = 0
-        self.excavation_theta = 0
+        self.excavation_x = EXCAVATION_X_START
+        self.excavation_y = EXCAVATION_Y_START
+        self.excavation_theta = EXCAVATION_THETA_START
 
         self.excavation_input_x = 0
         self.excavation_input_y = 0
@@ -226,10 +226,10 @@ class TeleopControl:
 
         self.excavation_x = max(EXCAVATION_X_MIN, min(self.excavation_x, EXCAVATION_X_MAX))
         self.excavation_y = max(EXCAVATION_Y_MIN, min(self.excavation_y, EXCAVATION_Y_MAX))
-        
-        excavation_msg = Pose2D(self.excavation_x, self.excavation_y, 0)
+
+        excavation_msg = Pose2D(self.excavation_x, self.excavation_y, self.excavation_theta)
         self.publishers["pub_exc_pose"].publish(excavation_msg)
-        
+
 
 if __name__ == '__main__':
     # Initialize as ROS node

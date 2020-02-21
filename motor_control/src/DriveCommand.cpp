@@ -11,19 +11,19 @@ void cmdCallback(const geometry_msgs::Twist::ConstPtr& msg)
     double rotateValue = msg->angular.z;
     if (moveValue > 0.0) {
         if (rotateValue > 0.0) {
-            leftMotorOutput = moveValue - rotateValue;
-            rightMotorOutput = std::max(moveValue, rotateValue);
+            leftMotorOutput = moveValue + rotateValue;
+            rightMotorOutput = moveValue - rotateValue;
         } else {
-            leftMotorOutput = std::max(moveValue, -rotateValue);
-            rightMotorOutput = moveValue + rotateValue;
+            leftMotorOutput = std::max(moveValue, rotateValue);
+            rightMotorOutput = moveValue - rotateValue;
         }
     } else {
         if (rotateValue > 0.0) {
-            leftMotorOutput = -std::max(-moveValue, rotateValue);
-            rightMotorOutput = moveValue + rotateValue;
+            leftMotorOutput = -std::max(moveValue, rotateValue);
+            rightMotorOutput = moveValue - rotateValue;
         } else {
-            leftMotorOutput = moveValue - rotateValue;
-            rightMotorOutput = -std::max(-moveValue, -rotateValue);
+            leftMotorOutput = moveValue + rotateValue;
+            rightMotorOutput = -std::max(moveValue, -rotateValue);
         }
     }
     ROS_INFO("Move=%f Rotate=%f", moveValue, rotateValue);
