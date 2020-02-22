@@ -83,10 +83,10 @@ while True:
                 p_tvec = tvec
 
                 # Compute pose of Camera relative to world
-                dst, _ = cv2.Rodrigues(rvec)
-                R = dst.T
-                tvec = np.dot(-R, tvec)
-                rvec, _ = cv2.Rodrigues(R)
+                #dst, _ = cv2.Rodrigues(rvec)
+                #R = dst.T
+                #tvec = np.dot(-R, tvec)
+                #rvec, _ = cv2.Rodrigues(R)
 
                 marker_detected.data = True
                 marker_pose = PoseStamped()
