@@ -8,7 +8,7 @@
   </node>
 
   <!-- teleop control -->
-  <node pkg="ros_teleop" type="teleop_control.py" name="teleop_control"/>
+  <node pkg="teleop" type="teleop_control.py" name="teleop_control"/>
 
   <!-- Drive motor control node - translates twist message into individual motor speeds -->
   <param name="wheel_separation" type="double" value="0.305"/>
@@ -19,5 +19,5 @@
   <param name="max_out_ang_vel" type="double" value="1.0"/>
   <param name="output_mode" type="string" value="vel"/>
   <param name="queue_size" type="int" value="15"/>
-  <node name="drive_speed_conversion" pkg="ros_teleop" type="drive_speed_conversion.py"/>
+  <node name="drive_speed_conversion" pkg="teleop" type="drive_speed_conversion.py"/>
 </launch>
