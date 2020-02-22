@@ -1,3 +1,4 @@
+
 type: "diff_drive_controller/DiffDriveController"
 publish_rate: 50
 
@@ -31,9 +32,9 @@ linear:
     max_acceleration       : 0.6   # m/s^2
 angular:
   z:
-    has_velocity_limits    : true
+    has_velocity_limits    : false
     max_velocity           : 4.8   # rad/s, gotten from bag motor ratio
-    has_acceleration_limits: true
+    has_acceleration_limits: false
     max_acceleration       : 6.0   # rad/s^2
-    
-    
+
+
