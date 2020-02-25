@@ -1,8 +1,16 @@
 <launch>
+    <!--<arg name="map_file" default="$(find robot_setup)/clean_maps/lunabotics.yaml"/>-->
+
     <include file="$(find move_base_setup)/launch/move_base.launch"/>
     <node pkg="tf" type="static_transform_publisher" name="map_to_odom_tf_pub"
           args="0 0 0 0 0 0 1 map odom 50"/>
+<<<<<<< refs/remotes/origin/move_base_sim_kush
     <node pkg="map_server" type="map_server" name="map_server" args="$(find move_base_setup)/clean_maps/lunabotics.yaml"/>
     <node pkg="move_base_sim" name="simulator" type="simulator.py"/>
+=======
+>>>>>>> Created a mock map of the competition field and added streamlined launch process
 
+    <node pkg="map_server" type="map_server" name="map_server" args="$(find move_base_setup)/clean_maps/lunabotics.yaml"/>
+    <node pkg="move_base_sim" name="simulator" type="simulator.py"/>
+    <node type="rviz" name="rviz" pkg="rviz" args="-d $(find move_base_sim)/launch/sim.rviz"/>    
 </launch>
