@@ -209,7 +209,7 @@ void TalonNode::update()
     posPub.publish(position);
 
     std_msgs::Int32 velocity;
-    velocity.data = talon.GetSelectedSensorVelocity();
+    velocity.data = talon.GetSelectedSensorVelocity() * 10;
     velPub.publish(velocity);
 }
 
