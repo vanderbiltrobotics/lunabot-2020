@@ -2,7 +2,7 @@
  <include file="$(find openni_launch)/launch/openni.launch" pass_all_args="true">
         <arg name="depth_registration" value="true"/>
 
-    </include>i
+    </include>
 
 <!-- Tf publisher to account for the way the kinect is mount vertically on the robot-->
    <node pkg="tf" type="static_transform_publisher" name="camera_base_link_rotation"

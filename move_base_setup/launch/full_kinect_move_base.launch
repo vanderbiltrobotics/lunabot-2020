@@ -1,0 +1,4 @@
+<launch>
+    <include file="$(find move_base_setup)/launch/move_base.launch"/>
+    <include file="$(find move_base_setup)/launch/kinect.launch"/>
+</launch>
