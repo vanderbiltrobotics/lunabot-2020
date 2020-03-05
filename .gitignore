@@ -6,6 +6,9 @@
 /cfg/cpp/
 /cfg/*.py
 
+# Ignore metadata
+**/metadata/*
+
 # Ignore generated docs
 *.dox
 *.wikidoc
