@@ -1,5 +1,8 @@
 <launch>
 
+  <arg name="rvizconfig" default="$(find urdf_tutorial)/rviz/urdf.rviz" />
+  <param name="use_gui" value="true"/>
+
   <!-- these are the arguments you can pass this launch file, for example paused:=true -->
   <arg name="paused" default="false"/>
   <arg name="use_sim_time" default="true"/>
@@ -28,5 +31,19 @@
   <node pkg="robot_state_publisher" type="robot_state_publisher"  name="robot_state_publisher">
     <param name="publish_frequency" type="double" value="30.0" />
   </node>
+
+
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" />
+  
+ <rosparam command="load"
+            file="$(find simulation)/config/joints.yaml"
+            ns="gazebo_joint_state_controller" />
+  <rosparam command="load"
+            file="$(find simulation)/config/sampledrive.yaml"
+            ns="gazebo_sample_drive_controller" />	
+
+  <node name="gazebo_controller_spawner" pkg="controller_manager" type="spawner"
+    args="gazebo_joint_state_controller gazebo_sample_drive_controller"/>
 
 </launch>

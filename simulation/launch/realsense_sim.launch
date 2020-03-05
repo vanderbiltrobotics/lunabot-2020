@@ -9,7 +9,7 @@
         name="robot_description"
         command="$(find xacro)/xacro '$(find simulation)/swapbot.urdf.xacro'"
     />
-     <include file="$(find simulation)/launch/gazebo_joystick.launch"/>
+     <include file="$(find simulation)/launch/gazebo_basic.launch"/>
      <include file="$(find move_base_setup)/launch/kinect.launch"/>
      <include file="$(find move_base_setup)/launch/move_base.launch"/>
     
