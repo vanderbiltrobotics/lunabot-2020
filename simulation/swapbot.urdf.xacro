@@ -15,14 +15,6 @@
     </inertial>
   </xacro:macro> 
 
-  <!-- MoveIt requires a fixed base for the arm -->
-  <link name="dummy_base"/>
-
-  <joint name="dummy_joint" type="fixed">
-     <parent link="dummy_base"/>
-     <child link="base_link"/>
-  </joint>
-  
   
   <link name="base_link">
     <visual>
@@ -47,6 +39,13 @@
     </collision>
     <xacro:default_inertial mass="50"/> 
   </link>
+  
+    <!-- Import macro for realsense-RS200 camera-->
+    <xacro:include filename="$(find realsense_gazebo_plugin)/urdf/realsense-RS200.macro.xacro"/>
+    <!-- Create camera instance -->
+    <xacro:realsense-rs200 prefix="" parent="base_link">
+        <origin xyz=".45 0 0.2" rpy="0 0 0" />   
+    </xacro:realsense-rs200>
 
   
   <xacro:macro name="m_joint" params="name type axis_xyz origin_rpy origin_xyz parent child limit_e limit_l limit_u limit_v">
