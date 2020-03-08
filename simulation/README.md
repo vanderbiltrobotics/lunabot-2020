@@ -8,6 +8,11 @@ The intent is to eventually be able to test a full integration of the software, 
 You must make sure that you have Gazebo 9.0 or higher.
 
 If there is an error in the ros controller package, see https://discourse.ros.org/t/ros-control-abi-breakage-in-melodic-2020-02/12681 (some mofo broke compatibility). This means that certain other ROS packages need to be updated, but finding it is hard so most likely you will have to run the upgrade command (this will take a while).
+
+Checkout the branch with the following command first
+```
+git checkout --recurse-submodules sim_devel
+```
 ```
 sudo apt-get upgrade
 ```
